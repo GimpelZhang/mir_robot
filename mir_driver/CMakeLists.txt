@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   rosgraph_msgs
   roslaunch
   rospy
-  rospy_message_converter
+  # rospy_message_converter
   sensor_msgs
   std_msgs
   tf
