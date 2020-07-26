@@ -4,6 +4,7 @@ project(mir_gazebo)
 
 find_package(catkin REQUIRED COMPONENTS
   roslaunch
+  gazebo_ros
 )
 
 ###################################
@@ -21,6 +22,7 @@ install(DIRECTORY
   launch
   maps
   sdf
+  models
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
