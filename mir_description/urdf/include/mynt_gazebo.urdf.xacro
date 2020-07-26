@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<robot name="mynt_gazebo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <xacro:macro name="sim_3dsensor_mynt">
+    <gazebo reference="camera_link">
+      <visual>  
+      <material>  
+      <ambient>0.79216 0.81961 0.93333 1</ambient>  
+      <diffuse>0.79216 0.81961 0.93333 1</diffuse>  
+      <specular>0.79216 0.81961 0.93333 1</specular>  
+      <emissive>0.79216 0.81961 0.93333 1</emissive>  
+      </material>  
+      </visual>  
+    </gazebo>
+<gazebo reference="mynt_imu_frame">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>300</update_rate>
+      <visualize>true</visualize>
+      <topic>imu</topic>
+      <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+        <topicName>imu</topicName>
+        <bodyName>mynt_imu_frame</bodyName>
+        <updateRateHZ>300</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>mynt_imu_frame</frameName>
+      </plugin>
+      <pose>0 0 0 0 0 0</pose>
+      <imu>
+        <angular_velocity>
+          <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2.1923690143745844e-03</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>1.4221215955051228e-05</bias_stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2.1923690143745844e-03</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>1.4221215955051228e-05</bias_stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2.1923690143745844e-03</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>1.4221215955051228e-05</bias_stddev>
+            </noise>
+          </z>
+        </angular_velocity>
+        <linear_acceleration>
+           <x>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2.1657228523252730e-02</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>3.8153871149178200e-04</bias_stddev>
+            </noise>
+          </x>
+          <y>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2.1657228523252730e-02</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>3.8153871149178200e-04</bias_stddev>
+            </noise>
+          </y>
+          <z>
+            <noise type="gaussian">
+              <mean>0.0</mean>
+              <stddev>2.1657228523252730e-02</stddev>
+              <bias_mean>0.0</bias_mean>
+              <bias_stddev>3.8153871149178200e-04</bias_stddev>
+            </noise>
+          </z>
+        </linear_acceleration>   
+       </imu>       
+    </sensor>
+  </gazebo>
+
+<gazebo reference="mynt_left_frame">
+      <sensor type="multicamera" name="stereo_camera">
+      <update_rate>30.0</update_rate>
+      <camera name="left">
+        <horizontal_fov>${84.5*PI/180}</horizontal_fov>
+        <image>
+                <width>640</width>
+                <height>480</height>
+                <!--<format>RGB_INT8</format>-->
+                <format>L8</format>
+            </image>
+            <clip>
+                <near>0.015</near>
+                <far>100</far>
+            </clip>
+            <distortion>
+              <!--fake number-->
+              <k1>0</k1>
+              <k2>0</k2>
+              <k3>0.0</k3>
+              <p1>0.0</p1>
+              <p2>0.0</p2>
+              <center>0.5 0.5</center>
+            </distortion>
+            <noise>
+                <type>gaussian</type>
+                <mean>0.0</mean>
+                <stddev>0.007</stddev>  <!--fake number-->
+            </noise>
+      </camera>
+      <camera name="right">
+        <pose>0 -0.12 0 0 0 0</pose>
+                <horizontal_fov>${84.5*PI/180}</horizontal_fov>
+        <image>
+                <width>640</width>
+                <height>480</height>
+                <!--<format>RGB_INT8</format>-->
+                <format>L8</format>
+            </image>
+            <clip>
+                <near>0.015</near>
+                <far>100</far>
+            </clip>
+            <distortion>
+              <!--fake number-->
+              <k1>0</k1>
+              <k2>0</k2>
+              <k3>0.0</k3>
+              <p1>0.0</p1>
+              <p2>0.0</p2>
+              <center>0.5 0.5</center>
+            </distortion>z
+            <noise>
+                <type>gaussian</type>
+                <mean>0.0</mean>
+                <stddev>0.007</stddev>  <!--fake number-->
+            </noise>
+      </camera>
+      <plugin name="stereo_camera_controller" filename="libgazebo_ros_multicamera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRateHZ>0</updateRateHZ>
+        <cameraName>camera</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>mynt_left_frame</frameName>
+        <rightFrameName>mynt_right_frame</rightFrameName>
+        <hackBaseline>0.12</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+      </plugin>
+    </sensor>
+</gazebo>
+    <gazebo reference="mynt_depth_frame">  
+      <sensor name="depth" type="depth">
+            <camera>
+            <horizontal_fov>${84.5*PI/180}</horizontal_fov>
+            <image>
+                <width>640</width>
+                <height>480</height>
+            </image>
+            <clip>
+                <near>0.015</near>
+                <far>100</far>
+            </clip>
+            <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.100</stddev> <!--fake number-->
+            </noise>
+            </camera>
+            <plugin name="depth_controller" filename="libgazebo_ros_openni_kinect.so">
+              <alwaysOn>true</alwaysOn>
+              <updateRate>0.0</updateRate>
+              <cameraName>depth</cameraName>
+              <imageTopicName>image_raw</imageTopicName>
+              <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+              <depthImageTopicName>depth_registered</depthImageTopicName>
+              <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+              <pointCloudTopicName>depth/points</pointCloudTopicName>
+              <frameName>mynt_depth_actual_frame</frameName>
+              <!--fake number-->
+              <pointCloudCutoff>0.05</pointCloudCutoff>
+              <rangeMax>4.0</rangeMax>
+              <distortionK1>0</distortionK1>
+              <distortionK2>0</distortionK2>
+              <distortionK3>0</distortionK3>
+              <distortionT1>0</distortionT1>
+              <distortionT2>0</distortionT2>
+              <CxPrime>0</CxPrime>
+              <Cx>0</Cx>
+              <Cy>0</Cy>
+              <focalLength>0</focalLength>
+              <hackBaseline>0</hackBaseline>
+            </plugin>
+            <always_on>1</always_on>
+            <update_rate>30</update_rate>
+            <visualize>0</visualize>
+        </sensor>
+    </gazebo>
+  </xacro:macro>
+</robot>
