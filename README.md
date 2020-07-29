@@ -1,3 +1,33 @@
+mir_driver: A warehouse demo
+==========
+
+This repo is a demo launching the MiR robot in the AWS small warehouse gazebo environment. 
+
+![img](https://github.com/GimpelZhang/mir_robot/tree/master/doc/gazebo_screen.gif)
+
+![img](https://github.com/GimpelZhang/mir_robot/tree/master/doc/rviz_screen.gif)
+
+AWS small warehouse demo (existing map)
+--------------------------
+
+```bash
+### gazebo:
+roslaunch mir_gazebo mir_small_warehouse.launch
+rosservice call /gazebo/unpause_physics   # or click the "start" button in the Gazebo GUI
+
+### localization:
+roslaunch mir_gazebo fake_localization.launch delta_x:=-11 delta_y:=-11
+
+# navigation:
+roslaunch mir_navigation start_planner.launch \
+    map_file:=$(rospack find mir_gazebo)/maps/small_warehouse.yaml \
+
+rviz -d $(rospack find mir_navigation)/rviz/navigation.rviz
+
+# octomap_server:
+roslaunch mir_gazebo octomap_start.launch
+```
+
 mir_driver
 ==========
 

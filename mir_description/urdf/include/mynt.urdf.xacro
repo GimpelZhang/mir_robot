@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!--
+This is the URDF model for the Mynt S1030 camera
+-->
+<robot name="sensor_mynt" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find mir_description)/urdf/include/mynt_gazebo.urdf.xacro" />
+  <xacro:property name="PI" value="3.1415926535897931" />
+  <xacro:macro name="sensor_mynt" params="parent *origin">
+  
+  <xacro:property name="camera_length" value="0.165" />
+  <xacro:property name="camera_width" value="0.0296" />
+  <xacro:property name="camera_height" value="0.0315" />
+  <xacro:property name="camera_mass" value="0.177" />
+  <xacro:property name="camera_collision_width" value="0.0318" />
+
+  <joint name="camera_joint" type="fixed">
+      <xacro:insert_block name="origin" />
+      <parent link="${parent}"/>
+      <child link="camera_link" />
+  </joint>
+
+  <link name="camera_link">
+   <inertial>
+      <origin
+        xyz="1.8066E-07 -0.013922 -5.14669999914755E-09"
+        rpy="0 0 0" />
+      <mass
+        value="0.011423" />
+      <inertia
+        ixx="1.02528087587849E-06"
+        ixy="-2.77738904265723E-11"
+        ixz="-2.5418963856357E-12"
+        iyy="3.33817433207942E-05"
+        iyz="-7.17759958750659E-13"
+        izz="3.39466645935057E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.02 0 0"
+        rpy="1.5707963267949 0 1.5707963267949" />
+      <geometry>
+        <mesh
+          filename="package://mir_description/urdf/include/mesh/double-camera-mynt1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.79216 0.81961 0.93333 1" />
+      </material>
+    </visual>
+
+    <collision>
+      <origin
+        xyz="-0.0 0 0"
+        rpy="1.5707963267949 0 0" />
+      <geometry>
+        <mesh
+          filename="package://mir_description/urdf/include/mesh/double-camera-mynt1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="mynt_imu_frame" />
+  <link name="mynt_left_frame" />
+  <link name="mynt_right_frame" />
+  <link name="mynt_depth_frame" />
+
+  <joint name="imu_link_joint" type="fixed">
+    <parent link="camera_link" />
+    <child link="mynt_imu_frame" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <joint name="image_left_joint" type="fixed">
+    <parent link="camera_link" />
+    <child link="mynt_left_frame" />
+    <origin xyz="0 0.06 0" />
+  </joint>
+
+  <joint name="image_right_joint" type="fixed">
+    <parent link="camera_link" />
+    <child link="mynt_right_frame" />
+    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="depth_link_joint" type="fixed">
+    <parent link="camera_link" />
+    <child link="mynt_depth_frame" />
+    <origin xyz="0 0 0" />
+  </joint>
+  <joint name="depth_actual_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
+      <parent link="mynt_depth_frame" />
+      <child link="mynt_depth_actual_frame" />
+    </joint>
+  <link name="mynt_depth_actual_frame"/>
+
+  <sim_3dsensor_mynt/>
+  </xacro:macro>
+</robot>

@@ -5,6 +5,14 @@
   <xacro:include filename="$(find mir_description)/urdf/include/mir_100.gazebo.xacro" />
   <xacro:include filename="$(find mir_description)/urdf/include/mir_100.transmission.xacro" />
   <xacro:include filename="$(find mir_description)/urdf/include/sick_s300.urdf.xacro" />
+  <xacro:include filename="$(find mir_description)/urdf/include/mynt.urdf.xacro"/>
+  <!-- Installation position and orientation of the sensor: -->
+  <xacro:property name="sensor_offset_x" value="0.45" />
+  <xacro:property name="sensor_offset_y" value="0" />
+  <xacro:property name="sensor_offset_z" value="0.35" />
+  <xacro:property name="sensor_rot_r" value="0" />
+  <xacro:property name="sensor_rot_p" value="0" />
+  <xacro:property name="sensor_rot_y" value="0" />
 
   <xacro:property name="deg_to_rad" value="0.017453293" />
 
@@ -218,7 +226,11 @@
     </joint>
 
     <link name="${prefix}us_2_frame" />
-
+    <!-- Camera -->
+    <!-- Load the camera sensor model: -->
+    <sensor_mynt parent="${prefix}base_link">
+      <origin xyz="${sensor_offset_x} ${sensor_offset_y} ${sensor_offset_z}" rpy="${sensor_rot_r} ${sensor_rot_p} ${sensor_rot_y}"/>
+    </sensor_mynt>
     <!-- wheels -->
     <xacro:actuated_wheel prefix="${prefix}" locationprefix="left" locationright="-1"/>
     <xacro:actuated_wheel prefix="${prefix}" locationprefix="right" locationright="1"/>
