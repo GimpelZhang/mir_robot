@@ -3,9 +3,9 @@ mir_driver: A warehouse demo
 
 This repo is a demo launching the MiR robot in the AWS small warehouse gazebo environment. 
 
-![img](https://github.com/GimpelZhang/mir_robot/tree/master/doc/gazebo_screen.gif)
+![Gazebo Environment](https://github.com/GimpelZhang/mir_robot/raw/master/doc/gazebo_screen.gif)
 
-![img](https://github.com/GimpelZhang/mir_robot/tree/master/doc/rviz_screen.gif)
+![3D Map](https://github.com/GimpelZhang/mir_robot/raw/master/doc/rviz_screen.gif)
 
 AWS small warehouse demo (existing map)
 --------------------------
