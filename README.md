@@ -1,9 +1,23 @@
 mir_driver: A warehouse demo
 ==========
 
-This repo is a demo launching the MiR robot in the AWS small warehouse gazebo environment. 
+This repo is a demo launching the MiR robot in the AWS small warehouse gazebo environment, with a stereo camera sensor. 
+
+Tested on Ubuntu 16.04, with ROS Kinetic & Gazebo 8.
+
+source:
+
+* [mir_driver](https://github.com/dfki-ric/mir_robot/tree/kinetic)
+
+* [gazebo environment](https://github.com/aws-robotics/aws-robomaker-small-warehouse-world)
+
+* [camera model](https://github.com/slightech/MYNT-EYE-ROS-Wrapper)
 
 ![Gazebo Environment](https://github.com/GimpelZhang/mir_robot/raw/master/doc/gazebo_screen.gif)
+
+Also, an octomap_server node was implemented. With no-noise p3d_base_controller plugin output, and usage of a fake_localization node, octomap_server can provide a kind of 3D map groundtruth, for 3D mapping algorithms evaluation. 
+
+In the following GIF, white points are from octomap_server, while green points are algorithm results from orb slam2 stereo, with a [ROS wrapper](https://github.com/appliedAI-Initiative/orb_slam_2_ros).
 
 ![3D Map](https://github.com/GimpelZhang/mir_robot/raw/master/doc/rviz_screen.gif)
 
