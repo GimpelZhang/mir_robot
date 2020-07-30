@@ -5,7 +5,7 @@ This repo is a demo launching the MiR robot in the AWS small warehouse gazebo en
 
 Tested on Ubuntu 16.04, with ROS Kinetic & Gazebo 8.
 
-source:
+sources:
 
 * [mir_driver](https://github.com/dfki-ric/mir_robot/tree/kinetic)
 
